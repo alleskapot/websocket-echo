@@ -1,0 +1,17 @@
+{
+  "name": "valsocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "forever start index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Schott",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "websocket": "^1.0.24",
+    "winston": "^2.3.0"
+  }
+}
