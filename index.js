@@ -4,9 +4,6 @@ var WebSocketServer = require("websocket").server;
 var winston = require('winston');
 var _ = require('lodash');
 
-var SocketEvent = require('./SocketEvent.js');
-var ClientManager = require('./ClientManager.js');
-
 var logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({'timestamp':true}),
@@ -25,27 +22,16 @@ var webSocketServer = new WebSocketServer({
     keepaliveGracePeriod: 5*1000
 });
 
-var manager = new ClientManager();
 
 function originIsAllowed(origin) {
     // TODO: put logic here to detect whether the specified origin is allowed.
     return true;
 }
 
-function handleMessage(connection, event) {
-    if(event.type == 'register') {
-        manager.register(connection, event.data);
-    }
-}
-
-function broadcast() {
-
-}
-
 webSocketServer.on('request', function(request) {
     if (!originIsAllowed(request.origin)) {
         request.reject();
-        logger.warn('Connection from origin ' + request.origin + ' using address ' + request.remoteAddress + ' rejected.');
+        //logger.warn('Connection from origin ' + request.origin + ' using address ' + request.remoteAddress + ' rejected.');
         return;
     } else {
         var connection = request.accept(null, request.origin);
@@ -62,15 +48,15 @@ webSocketServer.on('request', function(request) {
         });
 
         connection.on('close', function(reasonCode, description) {
-            manager.unregister(connection);
+            //manager.unregister(connection);
             //logger.info('Client ' + connection.remoteAddress + ' disconnected. (Code ' + reasonCode + ' - ' + description  + ')');
         });
 
         connection.on('error', function(error) {
-            logger.error(error);
+            //logger.error(error);
         });
     }
 });
 
-httpServer.listen(4000);
+httpServer.listen(3000);
 logger.info("Server started on port " + httpServer.address().port);
